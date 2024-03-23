@@ -64,10 +64,14 @@ int main() {
 	pthread_create(&threads[0], NULL, thread_func, (void *) &object[0]);
 	pthread_create(&threads[1], NULL, thread_func, (void *) &object[1]);
 
+	//~ Сюди запишемо певернені значенн
 	int sum[2];
-	int *p; 
+	//~ потрібний вказівник для отримання даних із потоку
+	int *p;
+	
 	//~ Чекаємо на завершення потоків.
-	//~ Тут NULL - ми не чекаємо, що функція потоку нам щось поверне
+	//~ int pthread_join(pthread_t thread, void **retval);
+	//~ retval - адреса вказівника. У вказівник запишеться адреса поверненої величини 
 	pthread_join(threads[0], (void **) &p);
 	sum[0] = *p;
 	pthread_join(threads[1], (void **) &p);
