@@ -1,4 +1,4 @@
-default: 1 2 3 4 5 6 7 8
+default: 1 2 3 4 5 6 7 8 9
 
 1: 1.c
 	gcc 1.c -o 1
@@ -24,5 +24,8 @@ default: 1 2 3 4 5 6 7 8
 8: 8.c
 	gcc 8.c -o 8
 
+9: 9.c
+	gcc 9.c -o 9
+
 clean:
-	rm 1 2 3 4 5 6 7 8
+	rm 1 2 3 4 5 6 7 8 9
