@@ -1,20 +1,19 @@
-//~ Приклад перевірки спільного доступу потоків до спільних ресурсів - глобальної змінної типу int.
-//~ Програма створює NUM_THREADS потоків, кожний з яких виконує функцію thread_function.
-//~ В цій функції кожний потік LOCAL_COUNT разів інкрементує глобальний лічильник counter.
-//~ Тобто, по завершенню потоків значення лічильника має бути NUM_THREADS * LOCAL_COUNT.
-//~ Однак тестові запуски програми показують, що це не завжди отримуємо значення NUM_THREADS * LOCAL_COUNT
+//~ Даний приклад робить все те саме, однак тепер використано атомарну змінну для лічильника:
+//~ _Atomic int counter = ATOMIC_VAR_INIT(0);
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdatomic.h>
 
 //~ Кількість потоків
 #define NUM_THREADS 10
 //~ Кожний потік LOCAL_COUNT разів збільшує значення лічильника на 1.
-#define LOCAL_COUNT 100000 
+#define LOCAL_COUNT 100000
+
 //~ Глобальний лічильник
-int counter = 0;
+_Atomic int counter = ATOMIC_VAR_INIT(0);
 
 //~ Функція для роботи в потоці
 void *thread_function(void *arg) {

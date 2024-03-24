@@ -1,4 +1,4 @@
-default: 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic
+default: 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
  
 
 1_exit: 1_exit.c
@@ -43,5 +43,8 @@ default: 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv
 14_atomic: 14_atomic.c
 	gcc 14_atomic.c -o 14_atomic
 
+15_atomic: 15_atomic.c
+	gcc 15_atomic.c -o 15_atomic
+
 clean:
-	rm 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic
+	rm 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
