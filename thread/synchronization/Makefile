@@ -1,32 +1,32 @@
-default: 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
+default: 01_exit 02_exit 03_sema 04_sema 05_sema 06_sema 07_mutex 08_mutex 09_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
  
 
-1_exit: 1_exit.c
-	gcc 1_exit.c -o 1_exit
+01_exit: 01_exit.c
+	gcc 01_exit.c -o 01_exit
 
-2_exit: 2_exit.c
-	gcc 2_exit.c -o 2_exit
+02_exit: 02_exit.c
+	gcc 02_exit.c -o 02_exit
 
-3_sema: 3_sema.c
-	gcc 3_sema.c -o 3_sema
+03_sema: 03_sema.c
+	gcc 03_sema.c -o 03_sema
 
-4_sema: 4_sema.c
-	gcc 4_sema.c -o 4_sema
+04_sema: 04_sema.c
+	gcc 04_sema.c -o 04_sema
 
-5_sema: 5_sema.c
-	gcc 5_sema.c -o 5_sema
+05_sema: 05_sema.c
+	gcc 05_sema.c -o 05_sema
 
-6_sema: 6_sema.c
-	gcc 6_sema.c -o 6_sema
+06_sema: 06_sema.c
+	gcc 06_sema.c -o 06_sema
 
-7_mutex: 7_mutex.c
-	gcc 7_mutex.c -o 7_mutex
+07_mutex: 07_mutex.c
+	gcc 07_mutex.c -o 07_mutex
 
-8_mutex: 8_mutex.c
-	gcc 8_mutex.c -o 8_mutex
+08_mutex: 08_mutex.c
+	gcc 08_mutex.c -o 08_mutex
 
-9_mutex: 9_mutex.c
-	gcc 9_mutex.c -o 9_mutex
+09_mutex: 09_mutex.c
+	gcc 09_mutex.c -o 09_mutex
 
 10_cv: 10_cv.c
 	gcc 10_cv.c -o 10_cv
@@ -47,4 +47,4 @@ default: 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv
 	gcc 15_atomic.c -o 15_atomic
 
 clean:
-	rm 1_exit 2_exit 3_sema 4_sema 5_sema 6_sema 7_mutex 8_mutex 9_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
+	rm 01_exit 02_exit 03_sema 04_sema 05_sema 06_sema 07_mutex 08_mutex 09_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
