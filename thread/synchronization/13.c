@@ -10,21 +10,11 @@
 //~ Задача потоку, що очікує на подію, перевірити, чи це точно та подія, яка необхідна йому для продовження роботи
 //~ Об'єкти м'ютекса та умовної змінної одні для всіх функцій - бо ми працюємо із одними даними
 
-//~ Дана програма зроблена для візуалізації наступного сценарію:
-//~ Припустимо, що потік, який очікує на величину COUNT_LIMIT_2, першим прийшов до умовної змінної, та,
-//~ оскільки значення лічильника мале, заснув. 
-//~ Другим прийшов лічильник, який очікує на меншу величину COUNT_LIMIT_1, і заснув - він другий в черзі на пробудження
-//~ При настанні події (count == COUNT_LIMIT_1), потік sender надсилає одиничний сигнал через pthread_cond_signal.
-//~ Пробуджується перший потік в черзі на пробудження (той, що чекає COUNT_LIMIT_2).
-//~ Оскільки ми не дали перевірку значення лічильника у функціях waiter_1 та waiter_2,
-//~ потік продовжить роботу, незважаючи на те, що, по ідеї, він би мав чекати значення лічильника =  COUNT_LIMIT_2
-//~ Другий потік, що спить, просунеться в черзі - стане першим на пробудження.
-//~ Він буде пробудженим, коли sender досягне значення лічильника COUNT_LIMIT_2, та продовжить роботу,
-//~ не зважаючи на те, що він чекав COUNT_LIMIT_1
-
-//~ Програма може працювати коректно в певних випадках - це залежить від того, який потік прийде першим до перевірки умовної змінної.
-//~ Передбачити який потік першим прийде не можливо - це залежить від планувальника задач.
-//~ Для користувача, робота планувальника є непердбачуваною. 
+//~ В цьому прикладі поведінка потоків ідентична, однак замість pthread_cond_signal,
+//~ що надсилає одиничний сигнал - пробуджує один потік,
+//~ ми використовуємо функції pthread_cond_broadcast - пробуджує всі потоки,
+//~ які заснули  через певну умовну змінну condition_variable. Всі потоки перевіряють свої умови, і, в залежності від її виконання,
+//~ або продовжують роботу, або знову засинають.
 
 #include <pthread.h>
 #include <stdio.h>
@@ -57,12 +47,12 @@ void *sender(void *t)
 		if (count == COUNT_LIMIT_1) {
 			// якщо вже досягли ліміту - сигналізуємо іншому потоку
 			printf("Потік %d, який змінює лічильник, дійшов до ліміту (%d). Надсилаємо сигнал тому, що очікує... ", my_id, COUNT_LIMIT_1);
-			pthread_cond_signal(&condition_variable);
+			pthread_cond_broadcast(&condition_variable);
 			printf("Сигнал відправлено.\n");
 		} else if (count == COUNT_LIMIT_2) {
 			// якщо вже досягли ліміту - сигналізуємо іншому потоку
 			printf("Потік %d, який змінює лічильник, дійшов до ліміту (%d). Надсилаємо сигнал тому, що очікує... ", my_id, COUNT_LIMIT_2);
-			pthread_cond_signal(&condition_variable);
+			pthread_cond_broadcast(&condition_variable);
 			printf("Сигнал відправлено.\n");
 		}
 		// Відкриваємо вхід іншому потоку.
@@ -81,11 +71,15 @@ void *waiter_1(void *t)
 	sleep(1);
 	int my_id =  * (int *) t;
 
-	printf("Потік %d очікує значення лічильника: %d\n", my_id, COUNT_LIMIT_1);
-	// тут спимо до отримання сигналу
-	pthread_mutex_lock(&mutex);
-	pthread_cond_wait(&condition_variable, &mutex);
-	pthread_mutex_unlock(&mutex);
+	
+	//~ тут спимо до отримання сигналу
+	while( count != COUNT_LIMIT_1) {
+		printf("Потік %d очікує значення лічильника: %d\n", my_id, COUNT_LIMIT_1);
+		pthread_mutex_lock(&mutex);
+		pthread_cond_wait(&condition_variable, &mutex);
+		pthread_mutex_unlock(&mutex);
+		printf("Потік %d (чекає на %d) отриимав сигнал. Перевіряє умову для продовження роботи...\n", my_id, COUNT_LIMIT_1);
+	}
 	printf("Потік %d (чекає на %d) дочекався значення лічильника %d\n", my_id, COUNT_LIMIT_1, count);
 
 	pthread_exit(NULL);
@@ -97,12 +91,15 @@ void *waiter_2(void *t)
 	//~ Тут ми дамо паузу для імітації бурхливої рооботи потоку
 	sleep(1);
 	int my_id =  * (int *) t;
-
-	printf("Потік %d очікує значення лічильника: %d\n", my_id, COUNT_LIMIT_2);
-	// тут спимо до отримання сигналу
-	pthread_mutex_lock(&mutex);
-	pthread_cond_wait(&condition_variable, &mutex);
-	pthread_mutex_unlock(&mutex);
+	
+	//~ тут спимо до отримання сигналу
+	while( count != COUNT_LIMIT_2) {
+		printf("Потік %d очікує значення лічильника: %d\n", my_id, COUNT_LIMIT_2);
+		pthread_mutex_lock(&mutex);
+		pthread_cond_wait(&condition_variable, &mutex);
+		pthread_mutex_unlock(&mutex);
+		printf("Потік %d (чекає на %d) отриимав сигнал. Перевіряє умову для продовження роботи...\n", my_id, COUNT_LIMIT_2);
+	}
 	printf("Потік %d (чекає на %d) дочекався значення лічильника %d\n", my_id, COUNT_LIMIT_2, count);
 
 	pthread_exit(NULL);
@@ -124,6 +121,7 @@ int main(int argc, char *argv[])
 	//~ Створюємо три потоки та передамо їм адреси змінної
 	//~ Один потік виконує функцію sender
 	pthread_create(&threads[0], NULL, sender, (void *) &num[0]);
+	 
 	//~ Два інші потоки виконують функції waiter_1 та waiter_2, відповідно.
 	pthread_create(&threads[1], NULL, waiter_1, (void *) &num[1]);
 	pthread_create(&threads[2], NULL, waiter_2, (void *) &num[2]);
