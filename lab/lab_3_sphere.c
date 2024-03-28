@@ -59,10 +59,12 @@ int main() {
 	//~ Знаходимо об'єм сектора кулі, що є частиною об'єму куба
 	//~ Об'єм сфери значходиться із пропорції: об'єм куба - це всі точки, об'єм сфери - це успішні спроби
 
-	float volume_approx = cube_volume * (float) success / (float) SIZE;
+	float volume_approx = cube_volume * ((float) success /  counter);
+	
 	//~ Друкуємо результати
 	printf("Кількість спроб: %d,\t Успішних спроб: %d\n", counter, success);
 	printf("Точний об'єм: %f,\t Розрахований об'єм: %f\n", volume_true, 8.0 * volume_approx);
+
 	// Домножуємо на 8, оскільки ми досліджували одну квартиль і отримали об'єм одного із 8 секторів кулі.
 	
 	return 0;
