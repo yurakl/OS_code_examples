@@ -118,17 +118,17 @@ int main(int argc, char * argv[]){
 		counter += 4 * PAGE;
 		printf("Запис у конвеєр №1.\tСумарно записано: %d\n", counter);
 		//~ чекаємо кілька секунд
-		sleep(2);
+		sleep(1);
 		//~ Записуємо другу порцію (4 сторінки), заповнені літерою 'b'
 		write(pfd[1], buffer + 4 * PAGE, 4 * PAGE);
 		counter += 4 * PAGE;
 		printf("Запис у конвеєр №2.\tСумарно записано: %d\n", counter);
-		sleep(2);
+		sleep(1);
 		//~ Записуємо третю порцію (4 сторінки)
 		write(pfd[1], buffer + 8 * PAGE, 4 * PAGE);
 		counter += 4 * PAGE;
 		printf("Запис у конвеєр №3.\tСумарно записано: %d\n", counter);
-		sleep(2);
+		sleep(1);
 		//~ Записуємо четверту порцію (4 сторінки)
 		write(pfd[1], buffer + 12 * PAGE, 4 * PAGE);
 		counter += 4 * PAGE;
