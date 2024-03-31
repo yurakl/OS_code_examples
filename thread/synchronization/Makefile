@@ -1,4 +1,4 @@
-default:exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02
+default:exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02 atomic_03
  
 
 exit_01: exit_01.c
@@ -46,5 +46,8 @@ atomic_01: atomic_01.c
 atomic_02: atomic_02.c
 	gcc atomic_02.c -o atomic_02
 
+atomic_03: atomic_03.c
+	gcc atomic_03.c -o atomic_03 -latomic -g
+
 clean:
-	rm exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02
+	rm exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02 atomic_03
