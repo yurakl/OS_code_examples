@@ -1,50 +1,50 @@
-default: 01_exit 02_exit 03_sema 04_sema 05_sema 06_sema 07_mutex 08_mutex 09_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
+default:exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02
  
 
-01_exit: 01_exit.c
-	gcc 01_exit.c -o 01_exit
+exit_01: exit_01.c
+	gcc exit_01.c -o exit_01
 
-02_exit: 02_exit.c
-	gcc 02_exit.c -o 02_exit
+exit_02: exit_02.c
+	gcc exit_02.c -o exit_02
 
-03_sema: 03_sema.c
-	gcc 03_sema.c -o 03_sema
+sema_01: sema_01.c
+	gcc sema_01.c -o sema_01
 
-04_sema: 04_sema.c
-	gcc 04_sema.c -o 04_sema
+sema_02: sema_02.c
+	gcc sema_02.c -o sema_02
 
-05_sema: 05_sema.c
-	gcc 05_sema.c -o 05_sema
+sema_03: sema_03.c
+	gcc sema_03.c -o sema_03
 
-06_sema: 06_sema.c
-	gcc 06_sema.c -o 06_sema
+sema_04: sema_04.c
+	gcc sema_04.c -o sema_04
 
-07_mutex: 07_mutex.c
-	gcc 07_mutex.c -o 07_mutex
+mutex_01: mutex_01.c
+	gcc mutex_01.c -o mutex_01
 
-08_mutex: 08_mutex.c
-	gcc 08_mutex.c -o 08_mutex
+mutex_02: mutex_02.c
+	gcc mutex_02.c -o mutex_02
 
-09_mutex: 09_mutex.c
-	gcc 09_mutex.c -o 09_mutex
+mutex_03: mutex_03.c
+	gcc mutex_03.c -o mutex_03
 
-10_cv: 10_cv.c
-	gcc 10_cv.c -o 10_cv
+cv_01: cv_01.c
+	gcc cv_01.c -o cv_01
 
-11_cv: 11_cv.c
-	gcc 11_cv.c -o 11_cv
+cv_02: cv_02.c
+	gcc cv_02.c -o cv_02
 
-12_cv: 12_cv.c
-	gcc 12_cv.c -o 12_cv
+cv_03: cv_03.c
+	gcc cv_03.c -o cv_03
 
-13_cv: 13_cv.c
-	gcc 13_cv.c -o 13_cv
+cv_04: cv_04.c
+	gcc cv_04.c -o cv_04
 
-14_atomic: 14_atomic.c
-	gcc 14_atomic.c -o 14_atomic
+atomic_01: atomic_01.c
+	gcc atomic_01.c -o atomic_01
 
-15_atomic: 15_atomic.c
-	gcc 15_atomic.c -o 15_atomic
+atomic_02: atomic_02.c
+	gcc atomic_02.c -o atomic_02
 
 clean:
-	rm 01_exit 02_exit 03_sema 04_sema 05_sema 06_sema 07_mutex 08_mutex 09_mutex 10_cv 11_cv 12_cv 13_cv 14_atomic 15_atomic
+	rm exit_01 exit_02 sema_01 sema_02 sema_03 sema_04 mutex_01 mutex_02 mutex_03 cv_01 cv_02 cv_03 cv_04 atomic_01 atomic_02
