@@ -21,9 +21,12 @@ typedef _Atomic struct {
 
 //~ Структура розміром 32 байти -  розмір int = 4 байти
 typedef _Atomic struct {
-	int a[8];
+	double a[8];
 } type_4;
-  
+
+typedef struct {
+	_Atomic int a[4];  
+} type_5;
 
 //~ Створимо об'єкти даних типів
 type_1 type_1_object_1 = {
@@ -47,7 +50,9 @@ type_3 type_3_object = {
 type_4 type_4_object = {
 	.a = {0},
 };
-
+type_5 type_5_object = {
+	.a = {0},
+};
 int main() {
 
 	
@@ -56,6 +61,7 @@ int main() {
 	printf("Розмір type_2: %ld, Тип атомарний?: %s\n", sizeof(type_2), atomic_is_lock_free(&type_2_object_1) ? "Так" : "Ні"); 
 	printf("Розмір type_3: %ld, Тип атомарний?: %s\n", sizeof(type_3), atomic_is_lock_free(&type_3_object) ? "Так" : "Ні");
 	printf("Розмір type_4: %ld, Тип атомарний?: %s\n", sizeof(type_4), atomic_is_lock_free(&type_4_object) ? "Так" : "Ні");
+	printf("Розмір type_4: %ld, Тип атомарний?: %s\n", sizeof(type_5), atomic_is_lock_free(&type_5_object.a[1]) ? "Так" : "Ні");
 
 	atomic_exchange(&type_1_object_1, type_1_object_2);
 	atomic_exchange(&type_2_object_1, type_2_object_2);
