@@ -17,11 +17,13 @@ void *thread_function(void *arg) {
 	//~ Перевірка доступу до критичної секції коду
 	pthread_mutex_lock(&mymutex);
 		printf("Потік %d: знаходиться в критичній секції.\n", id);
-		sleep(3);
-		printf("Потік %d: виходить.\n", id);
+		sleep(1);
+		printf("Потік %d: завершує роботу.\n", id);
+		if (1)
+			pthread_exit(NULL);
 	//~ Відпускаємо м'ютекс навиході з критичної секцї коду
 	pthread_mutex_unlock(&mymutex) ;
-	pthread_mutex_unlock(&mymutex) ;	
+
 	pthread_exit(NULL);
 }
 
