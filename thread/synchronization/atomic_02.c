@@ -20,7 +20,7 @@ void *thread_function(void *arg) {
 	int id = *((int *) arg);
 	int i = LOCAL_COUNT;
 	while (i > 0) {
-		counter++;
+		atomic_fetch_add(&counter, 1);
 		i--;
 	}
 	pthread_exit(NULL);
